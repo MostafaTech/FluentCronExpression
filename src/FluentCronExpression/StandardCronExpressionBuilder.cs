@@ -13,17 +13,26 @@ namespace FluentCronExpression
 
         public StandardCronExpressionBuilder() : this(null, null) { }
         public StandardCronExpressionBuilder(string expression) : this(expression, null) { }
+        public StandardCronExpressionBuilder(StandardCronExpressionConfiguration configuration) : this(null, configuration) { }
         public StandardCronExpressionBuilder(string expression = null, StandardCronExpressionConfiguration configuration = null)
         {
-            _configuration = configuration ?? new StandardCronExpressionConfiguration();
+            // set configuration or default
+            _configuration = configuration ?? new StandardCronExpressionConfiguration
+            {
+                UseMonthNames = true,
+                UseWeekDayNames = true,
+            };
 
+            // set default expression if its not provided
             if (string.IsNullOrWhiteSpace(expression))
                 expression = "* * * * *";
 
+            // validate initial expression
             var parts = expression.Split(' ');
             if (parts.Length != 5)
                 throw new ArgumentException($"The value '{expression}' is not a valid cron expression.");
 
+            // explode expression to a tuple object
             exp = (parts[0], parts[1], parts[2], parts[3], parts[4]);
         }
 
@@ -177,7 +186,7 @@ namespace FluentCronExpression
         public StandardCronExpressionBuilder WithMonth(int at)
         {
             guardAgainstInvalidMonthValue(at);
-            exp.Month = mapMonths[at];
+            exp.Month = _configuration.UseMonthNames ? mapMonths[at] : at.ToString();
             return this;
         }
         public StandardCronExpressionBuilder WithMonths(params int[] months)
@@ -185,7 +194,7 @@ namespace FluentCronExpression
             foreach (var i in months)
                 guardAgainstInvalidMonthValue(i);
 
-            exp.Month = string.Join(",", months.Select(x => mapMonths[x]));
+            exp.Month = string.Join(",", months.Select(x => _configuration.UseMonthNames ? mapMonths[x] : x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithMonthsBetween(int from, int to)
@@ -193,7 +202,9 @@ namespace FluentCronExpression
             guardAgainstInvalidMonthValue(from);
             guardAgainstInvalidMonthValue(to);
             guardAgainstInvalidRange(from, to);
-            exp.Month = $"{from}-{to}";
+            exp.Month = _configuration.UseMonthNames ?
+                $"{mapMonths[from]}-{mapMonths[to]}" :
+                $"{from}-{to}";
             return this;
         }
         public StandardCronExpressionBuilder WithMonthsAll()
@@ -214,7 +225,7 @@ namespace FluentCronExpression
         public StandardCronExpressionBuilder WithWeekDay(int at)
         {
             guardAgainstInvalidWeekDayValue(at);
-            exp.WeekDay = mapWeekDays[at];
+            exp.WeekDay = _configuration.UseWeekDayNames ? mapWeekDays[at] : at.ToString();
             return this;
         }
         public StandardCronExpressionBuilder WithWeekDays(params int[] weekDays)
@@ -222,7 +233,7 @@ namespace FluentCronExpression
             foreach (var i in weekDays)
                 guardAgainstInvalidWeekDayValue(i);
 
-            exp.WeekDay = string.Join(",", weekDays.Select(x => mapWeekDays[x]));
+            exp.WeekDay = string.Join(",", weekDays.Select(x => _configuration.UseWeekDayNames ? mapWeekDays[x] : x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithWeekDaysBetween(int from, int to)
@@ -230,7 +241,9 @@ namespace FluentCronExpression
             guardAgainstInvalidWeekDayValue(from);
             guardAgainstInvalidWeekDayValue(to);
             guardAgainstInvalidRange(from, to);
-            exp.WeekDay = $"{from}-{to}";
+            exp.WeekDay = _configuration.UseWeekDayNames ?
+                $"{mapWeekDays[from]}-{mapWeekDays[to]}" :
+                $"{from}-{to}";
             return this;
         }
         public StandardCronExpressionBuilder WithWeekDaysAll()
