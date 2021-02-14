@@ -18,7 +18,12 @@ namespace FluentCronExpression
         {
             // set configuration or default
             _configuration = configuration ?? new StandardCronExpressionConfiguration();
+            
+            Reset(expression);
+        }
 
+        public StandardCronExpressionBuilder Reset(string expression = null)
+        {
             // set default expression if its not provided
             if (string.IsNullOrWhiteSpace(expression))
                 expression = "* * * * *";
@@ -30,6 +35,8 @@ namespace FluentCronExpression
 
             // explode expression to a tuple object
             exp = (parts[0], parts[1], parts[2], parts[3], parts[4]);
+
+            return this;
         }
 
         #endregion
@@ -246,33 +253,6 @@ namespace FluentCronExpression
         {
             exp.WeekDay = "*";
             return this;
-        }
-
-        #endregion
-
-        #region Composit Methods
-
-        public StandardCronExpressionBuilder SetEveryDay(int minute = 0, int hour = 0)
-        {
-            return this.WithMinute(minute).WithHour(hour)
-                .WithDaysOfMonthAll().WithMonthsAll().WithWeekDaysAll();
-        }
-        public StandardCronExpressionBuilder SetEveryMonth(int dayOfMonth = 1, int minute = 0, int hour = 0)
-        {
-            return this.WithDayOfMonth(dayOfMonth)
-                .WithMinute(minute).WithHour(hour)
-                .WithMonthsAll().WithWeekDaysAll();
-        }
-        public StandardCronExpressionBuilder SetEveryYear(int atMonth = 1, int dayOfMonth = 1, int minute = 0, int hour = 0)
-        {
-            return this.WithMonth(atMonth).WithDayOfMonth(dayOfMonth)
-                .WithMinute(minute).WithHour(hour).WithWeekDaysAll();
-        }
-        public StandardCronExpressionBuilder SetEveryDayOfWeek(DayOfWeek dayOfWeek, int minute = 0, int hour = 0)
-        {
-            return this.WithWeekDay(((int)dayOfWeek) + 1)
-                .WithMinute(minute).WithHour(hour)
-                .WithDaysOfMonthAll().WithMonthsAll();
         }
 
         #endregion

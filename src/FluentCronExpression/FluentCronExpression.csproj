@@ -5,10 +5,18 @@
     <Version>0.1.0</Version>
     <Authors>Mostafa Rowghanian</Authors>
     <Product>Fluent Cron Expression Builder</Product>
-    <Description>A utility to build standard cron expressions based on crontab
+    <Description>A utility to build standard cron expressions fluently based on crontab
 - Fully compatible with HangFire</Description>
     <PackageProjectUrl>https://github.com/MostafaTech/FluentCronExpression</PackageProjectUrl>
     <PackageTags>cron,cron-expression,cron-expression-generator</PackageTags>
+    <RepositoryUrl>https://github.com/MostafaTech/FluentCronExpression</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="../../Readme.md">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+  </ItemGroup>
 
 </Project>
