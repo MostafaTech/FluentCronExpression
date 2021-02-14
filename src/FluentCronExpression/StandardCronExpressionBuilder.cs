@@ -14,14 +14,10 @@ namespace FluentCronExpression
         public StandardCronExpressionBuilder() : this(null, null) { }
         public StandardCronExpressionBuilder(string expression) : this(expression, null) { }
         public StandardCronExpressionBuilder(StandardCronExpressionConfiguration configuration) : this(null, configuration) { }
-        public StandardCronExpressionBuilder(string expression = null, StandardCronExpressionConfiguration configuration = null)
+        public StandardCronExpressionBuilder(string expression, StandardCronExpressionConfiguration configuration)
         {
             // set configuration or default
-            _configuration = configuration ?? new StandardCronExpressionConfiguration
-            {
-                UseMonthNames = true,
-                UseWeekDayNames = true,
-            };
+            _configuration = configuration ?? new StandardCronExpressionConfiguration();
 
             // set default expression if its not provided
             if (string.IsNullOrWhiteSpace(expression))

@@ -5,7 +5,7 @@ namespace FluentCronExpression
 {
     public class StandardCronExpressionConfiguration
     {
-        public bool UseMonthNames { get; set; }
-        public bool UseWeekDayNames { get; set; }
+        public bool UseMonthNames { get; set; } = true;
+        public bool UseWeekDayNames { get; set; } = true;
     }
 }
