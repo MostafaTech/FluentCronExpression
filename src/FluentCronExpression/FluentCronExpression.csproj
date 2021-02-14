@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,6 +10,7 @@
     <PackageProjectUrl>https://github.com/MostafaTech/FluentCronExpression</PackageProjectUrl>
     <PackageTags>cron,cron-expression,cron-expression-generator</PackageTags>
     <RepositoryUrl>https://github.com/MostafaTech/FluentCronExpression</RepositoryUrl>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,13 @@
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Licence.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
