@@ -30,5 +30,15 @@ namespace FluentCronExpression
             return builder.Reset().WithWeekDay(((int)dayOfWeek) + 1).WithMinute(minute).WithHour(hour);
         }
 
+        public static StandardCronExpressionBuilder SetFromHourMinuteToHourMinuteString(
+            this StandardCronExpressionBuilder builder, string from, string to)
+        {
+            var _from = from.Split(':');
+            var _to = to.Split(':');
+            return builder.Reset()
+                .WithMinutesBetween(int.Parse(_from[1]), int.Parse(_to[1]))
+                .WithHoursBetween(int.Parse(_from[0]), int.Parse(_to[0]));
+        }
+
     }
 }

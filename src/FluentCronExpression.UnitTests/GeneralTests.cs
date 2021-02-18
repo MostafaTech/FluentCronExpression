@@ -49,5 +49,14 @@ namespace FluentCronExpression.UnitTests
             Assert.Equal("0 0 * * SUN", cron.Build());
         }
 
+        [Fact]
+        public void validate_between0600to0659Every5MinutesDaily()
+        {
+            var cron = new StandardCronExpressionBuilder()
+                .SetFromHourMinuteToHourMinuteString("06:00", "06:59")
+                .WithMinutesEvery(5);
+            Assert.Equal("0-59/5 6 * * *", cron.Build());
+        }
+
     }
 }

@@ -18,7 +18,7 @@ namespace FluentCronExpression
         {
             // set configuration or default
             _configuration = configuration ?? new StandardCronExpressionConfiguration();
-            
+
             Reset(expression);
         }
 
@@ -63,14 +63,21 @@ namespace FluentCronExpression
         }
         public StandardCronExpressionBuilder WithMinutes(params int[] minutes)
         {
-            foreach (var i in minutes)
+            var _minutes = minutes.Distinct().ToArray();
+            if (_minutes.Length == 1)
+                return WithMinute(_minutes[0]);
+
+            foreach (var i in _minutes)
                 guardAgainstInvalidMinuteValue(i);
 
-            exp.Minute = string.Join(",", minutes.Select(x => x.ToString()));
+            exp.Minute = string.Join(",", _minutes.Select(x => x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithMinutesBetween(int from, int to)
         {
+            if (from == to)
+                return WithMinute(from);
+
             guardAgainstInvalidMinuteValue(from);
             guardAgainstInvalidMinuteValue(to);
             guardAgainstInvalidRange(from, to);
@@ -104,14 +111,21 @@ namespace FluentCronExpression
         }
         public StandardCronExpressionBuilder WithHours(params int[] hours)
         {
-            foreach (var i in hours)
+            var _hours = hours.Distinct().ToArray();
+            if (_hours.Length == 1)
+                return WithHour(_hours[0]);
+
+            foreach (var i in _hours)
                 guardAgainstInvalidHourValue(i);
 
-            exp.Hour = string.Join(",", hours.Select(x => x.ToString()));
+            exp.Hour = string.Join(",", _hours.Select(x => x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithHoursBetween(int from, int to)
         {
+            if (from == to)
+                return WithHour(from);
+
             guardAgainstInvalidHourValue(from);
             guardAgainstInvalidHourValue(to);
             guardAgainstInvalidRange(from, to);
@@ -145,14 +159,21 @@ namespace FluentCronExpression
         }
         public StandardCronExpressionBuilder WithDaysOfMonth(params int[] atDaysOfMonth)
         {
-            foreach (var i in atDaysOfMonth)
+            var _atDaysOfMonth = atDaysOfMonth.Distinct().ToArray();
+            if (_atDaysOfMonth.Length == 1)
+                return WithDayOfMonth(_atDaysOfMonth[0]);
+
+            foreach (var i in _atDaysOfMonth)
                 guardAgainstInvalidDayOfMonthValue(i);
 
-            exp.DayOfMonth = string.Join(",", atDaysOfMonth.Select(x => x.ToString()));
+            exp.DayOfMonth = string.Join(",", _atDaysOfMonth.Select(x => x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithDaysOfMonthBetween(int from, int to)
         {
+            if (from == to)
+                return WithDayOfMonth(from);
+
             guardAgainstInvalidDayOfMonthValue(from);
             guardAgainstInvalidDayOfMonthValue(to);
             guardAgainstInvalidRange(from, to);
@@ -194,14 +215,21 @@ namespace FluentCronExpression
         }
         public StandardCronExpressionBuilder WithMonths(params int[] months)
         {
-            foreach (var i in months)
+            var _months = months.Distinct().ToArray();
+            if (_months.Length == 1)
+                return WithMonth(_months[0]);
+
+            foreach (var i in _months)
                 guardAgainstInvalidMonthValue(i);
 
-            exp.Month = string.Join(",", months.Select(x => _configuration.UseMonthNames ? mapMonths[x] : x.ToString()));
+            exp.Month = string.Join(",", _months.Select(x => _configuration.UseMonthNames ? mapMonths[x] : x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithMonthsBetween(int from, int to)
         {
+            if (from == to)
+                return WithMonth(from);
+
             guardAgainstInvalidMonthValue(from);
             guardAgainstInvalidMonthValue(to);
             guardAgainstInvalidRange(from, to);
@@ -233,14 +261,21 @@ namespace FluentCronExpression
         }
         public StandardCronExpressionBuilder WithWeekDays(params int[] weekDays)
         {
-            foreach (var i in weekDays)
+            var _weekDays = weekDays.Distinct().ToArray();
+            if (_weekDays.Length == 1)
+                return WithWeekDay(_weekDays[0]);
+
+            foreach (var i in _weekDays)
                 guardAgainstInvalidWeekDayValue(i);
 
-            exp.WeekDay = string.Join(",", weekDays.Select(x => _configuration.UseWeekDayNames ? mapWeekDays[x] : x.ToString()));
+            exp.WeekDay = string.Join(",", _weekDays.Select(x => _configuration.UseWeekDayNames ? mapWeekDays[x] : x.ToString()));
             return this;
         }
         public StandardCronExpressionBuilder WithWeekDaysBetween(int from, int to)
         {
+            if (from == to)
+                return WithWeekDay(from);
+
             guardAgainstInvalidWeekDayValue(from);
             guardAgainstInvalidWeekDayValue(to);
             guardAgainstInvalidRange(from, to);

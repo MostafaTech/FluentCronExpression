@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Mostafa Rowghanian</Authors>
     <Product>Fluent Cron Expression Builder</Product>
     <Description>A utility to build standard cron expressions fluently based on crontab
@@ -11,6 +11,7 @@
     <PackageTags>cron,cron-expression,cron-expression-generator</PackageTags>
     <RepositoryUrl>https://github.com/MostafaTech/FluentCronExpression</RepositoryUrl>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
